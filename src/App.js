@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-     <Weather />
+     <Weather cityName="Venice"/>
      
      <small>This project was coded by <a href="mailto:szczesna.zuzia@gmail.com" target="_blank"> Zuzanna Szczęsna </a>and is
     <a href="https://github.com/zszczesna/my-weather-app" target="_blank"> open-sourced on GitHub{" "}</a>

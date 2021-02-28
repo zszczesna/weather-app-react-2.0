@@ -1,28 +1,34 @@
 import React, { useState } from "react";
 import "./Weather.css";
-export default function Weather() {
-  let weatherData = {
-    city: "New York",
-    temperature: 19,
+import axios from "axios";
+export default function Weather(props) {
+  let displayData = {
     date: "Tuesday, 10:00",
     day: "22/05",
-    description: "Sunny",
-    imgUrl: "https://ssl.gstatic.com/onebox/weather/64/sunny.png",
-    humidity: 80,
-    wind: 10
   };
 
-  const [temperature, setTemperature] = useState(weatherData.temperature);
-  const [city, setCity] = useState(weatherData.city);
-  const [message, setMessage] = useState(weatherData.city);
+  const [temperature, setTemperature] = useState(null);
+  const [city, setCity] = useState(props.citName);
+  const [weather, setWeather] = useState({})
 
+  function weatherData(response){
+        setWeather({
+            temperature: Math.round(response.data.main.temp),
+            description: response.data.weather[0].description,
+            wind: response.data.wind.speed,
+            humidity:response.data.main.humidity,
+            icon: `http://openweathermap.org/img/wn/${
+        response.data.weather[0].icon
+      }@2x.png`
+        })
+  }
+ 
   function handleSubmit(event) {
     event.preventDefault();
-    if (city.length > 0) {
-      setMessage(`${city}`);
-    } else {
-      alert("Enter a city");
-    }
+    let apiKey = "444dec86065a0dffc920fcea9a0aef12";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}
+    &appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(weatherData);
   }
 
   function updateCity(event) {
@@ -31,13 +37,13 @@ export default function Weather() {
 
   function fahrenheit(event) {
     event.preventDefault();
-    let fahrenheitValue = Math.round((weatherData.temperature * 9) / 5 + 32);
+    let fahrenheitValue = Math.round((weather.temperature * 9) / 5 + 32);
     setTemperature(fahrenheitValue);
   }
 
   function celsius(event) {
     event.preventDefault();
-    setTemperature(weatherData.temperature);
+    setTemperature(weather.temperature);
   }
   return (
     <div className="Weather">
@@ -55,14 +61,14 @@ export default function Weather() {
         <button className="btn btn-info shadow-sm"> Current Location </button>
       </form>
 
-      <h1>{message}</h1>
+      <h1>{city}</h1>
 
       <ul>
-        <li className="description">{weatherData.description}</li>
+        <li className="description">{weather.description}</li>
 
         <li>
           {" "}
-          <span className="temperature">{temperature}</span>{" "}
+          <span className="temperature">{weather.temperature}</span>{" "}
           <span className="units">
             <a href="#" className="active" onClick={celsius}>
               °C
@@ -76,26 +82,26 @@ export default function Weather() {
 
         <li>
           <img
-            src={weatherData.imgUrl}
-            alt={weatherData.description}
+            src={weather.icon}
+            alt={weather.description}
             className="weatherIcon"
           />
         </li>
 
-        <li className="date-now">{weatherData.day}</li>
+        <li className="date-now">{displayData.day}</li>
 
         <li>
           {" "}
           <i className="fas fa-water"></i>
-          <span className="humidity"> {weatherData.humidity}%</span>
+          <span className="humidity"> {weather.humidity}%</span>
         </li>
 
         <li>
           <i className="fas fa-wind"></i>{" "}
-          <span className="wind-speed"> {weatherData.wind}km/h</span>{" "}
+          <span className="wind-speed"> {weather.wind}km/h</span>{" "}
         </li>
 
-        <li className="current-time">{weatherData.date}</li>
+        <li className="current-time">{displayData.date}</li>
       </ul>
     </div>
   );
