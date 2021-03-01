@@ -1,20 +1,10 @@
-import React,{useState} from "react"
+import React from "react"
 import DisplayDay from "./DisplayDay";
 import FormattedDate from "./FormattedDate";
 import WeatherIcon from "./WeatherIcon";
+import WeatherTemperature from "./WeatherTemperature";
 export default function WeatherInfo(props){
-const [temperature, setTemperature] = useState(null);
 
-function fahrenheit(event) {
-    event.preventDefault();
-    let fahrenheitValue = Math.round((props.info.temperature * 9) / 5 + 32);
-    setTemperature(fahrenheitValue);
-  }
-
-  function celsius(event) {
-    event.preventDefault();
-    setTemperature(props.info.temperature);
-  }
     return <div className="WeatherInfo">
          <h1>{props.info.city}</h1>
 
@@ -23,16 +13,8 @@ function fahrenheit(event) {
 
         <li>
           {" "}
-          <span className="temperature">{props.info.temperature}</span>{" "}
-          <span className="units">
-            <a href="#" className="active" onClick={celsius} >
-              °C
-            </a>{" "}
-            |{" "}
-            <a href="#" onClick={fahrenheit}>
-              °F
-            </a>{" "}
-          </span>{" "}
+          <WeatherTemperature celsius={props.info.temperature}/>
+         
         </li>
 
         <li>
