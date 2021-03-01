@@ -1,7 +1,7 @@
 import React,{useState} from "react"
 import DisplayDay from "./DisplayDay";
 import FormattedDate from "./FormattedDate";
-
+import WeatherIcon from "./WeatherIcon";
 export default function WeatherInfo(props){
 const [temperature, setTemperature] = useState(null);
 
@@ -36,11 +36,8 @@ function fahrenheit(event) {
         </li>
 
         <li>
-          <img
-            src={props.info.icon}
-            alt={props.info.description}
-            className="weatherIcon"
-          />
+          <WeatherIcon code={props.info.icon}  />
+         
         </li>
 
         <li className="date-now"><DisplayDay date={props.info.date}/></li>
