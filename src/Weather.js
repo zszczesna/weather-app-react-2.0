@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import "./Weather.css";
 import axios from "axios";
-import FormattedDate from "./FormattedDate";
-import DisplayDay from "./DisplayDay";
+import WeatherInfo from "./WeatherInfo";
+import Loader from "react-loader-spinner";
 export default function Weather(props) {
 
-  const [temperature, setTemperature] = useState(null);
-  const [city, setCity] = useState(props.citName);
+  
+  const [city, setCity] = useState(props.defaultCity);
   const [weather, setWeather] = useState({ready: false})
   
   function weatherData(response){
       
         setWeather({
             ready: true,
+            city: response.data.name,
             date: new Date(response.data.dt*1000), 
             day: new Date(response.data.dt*1000), 
             temperature: Math.round(response.data.main.temp),
@@ -25,28 +26,23 @@ export default function Weather(props) {
         })
   }
  
-  function handleSubmit(event) {
-    event.preventDefault();
-    const apiKey = "444dec86065a0dffc920fcea9a0aef12";
+  function search(){
+     const apiKey = "444dec86065a0dffc920fcea9a0aef12";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}
     &appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(weatherData);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
   }
 
   function updateCity(event) {
     setCity(event.target.value.trim());
   }
 
-  function fahrenheit(event) {
-    event.preventDefault();
-    let fahrenheitValue = Math.round((weather.temperature * 9) / 5 + 32);
-    setTemperature(fahrenheitValue);
-  }
-
-  function celsius(event) {
-    event.preventDefault();
-    setTemperature(weather.temperature);
-  }
+  
   if(weather.ready){
   return (
     <div className="Weather">
@@ -63,65 +59,19 @@ export default function Weather(props) {
         <input type="submit" value="🔍" className="btn btn-light shadow-sm" />
       </form>
 
-
-      <h1>{city}</h1>
-
-      <ul>
-        <li className="description  text-capitalize" >{weather.description}</li>
-
-        <li>
-          {" "}
-          <span className="temperature">{weather.temperature}</span>{" "}
-          <span className="units">
-            <a href="#" className="active" onClick={celsius}>
-              °C
-            </a>{" "}
-            |{" "}
-            <a href="#" onClick={fahrenheit}>
-              °F
-            </a>{" "}
-          </span>{" "}
-        </li>
-
-        <li>
-          <img
-            src={weather.icon}
-            alt={weather.description}
-            className="weatherIcon"
-          />
-        </li>
-
-        <li className="date-now"><DisplayDay date={weather.date}/></li>
-
-        <li>
-          {" "}
-          <i className="fas fa-water"></i>
-          <span className="humidity"> {weather.humidity}%</span>
-        </li>
-
-        <li>
-          <i className="fas fa-wind"></i>{" "}
-          <span className="wind-speed"> {weather.wind}km/h</span>{" "}
-        </li>
-
-        <li className="current-time"><FormattedDate day={weather.date} /></li>
-      </ul>
+        <WeatherInfo info={weather}/>
+     
     </div>
   );} else{
-     return( <div className="Weather">
-           <form onSubmit={handleSubmit}>
-        <input
-          type="search"
-          placeholder="City search"
-          onChange={updateCity}
-          autoFocus="on"
-          autoComplete="off"
-          className="form-control form-control-sm shadow-sm"
-        />
-
-        <input type="submit" value="🔍" className="btn btn-light shadow-sm" />
-      </form>
-      </div>)
+     search();
+    return  (  <Loader 
+        type="Rings"
+        color="#8c0000"
+        height={500}
+        width={500}
+        radius={400}
+      />);
+    
   }
 
 }
