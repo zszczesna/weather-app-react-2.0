@@ -36,10 +36,6 @@ li {
   font-size: 22px;
 }
 
-.description::first-letter {
-  text-transform: capitalize;
-}
-
 .date-now,
 .wind-speed,
 .humidity {

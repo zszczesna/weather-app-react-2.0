@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import "./Weather.css";
 import axios from "axios";
+import FormattedDate from "./FormattedDate";
+import DisplayDay from "./DisplayDay";
 export default function Weather(props) {
-  let displayData = {
-    date: "Tuesday, 10:00",
-    day: "22/05",
-  };
 
   const [temperature, setTemperature] = useState(null);
   const [city, setCity] = useState(props.citName);
@@ -15,6 +13,8 @@ export default function Weather(props) {
       
         setWeather({
             ready: true,
+            date: new Date(response.data.dt*1000), 
+            day: new Date(response.data.dt*1000), 
             temperature: Math.round(response.data.main.temp),
             description: response.data.weather[0].description,
             wind: response.data.wind.speed,
@@ -63,10 +63,11 @@ export default function Weather(props) {
         <input type="submit" value="🔍" className="btn btn-light shadow-sm" />
       </form>
 
+
       <h1>{city}</h1>
 
       <ul>
-        <li className="description" >{weather.description}</li>
+        <li className="description  text-capitalize" >{weather.description}</li>
 
         <li>
           {" "}
@@ -90,7 +91,7 @@ export default function Weather(props) {
           />
         </li>
 
-        <li className="date-now">{displayData.day}</li>
+        <li className="date-now"><DisplayDay date={weather.date}/></li>
 
         <li>
           {" "}
@@ -103,7 +104,7 @@ export default function Weather(props) {
           <span className="wind-speed"> {weather.wind}km/h</span>{" "}
         </li>
 
-        <li className="current-time">{displayData.date}</li>
+        <li className="current-time"><FormattedDate day={weather.date} /></li>
       </ul>
     </div>
   );} else{
