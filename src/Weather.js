@@ -9,10 +9,12 @@ export default function Weather(props) {
 
   const [temperature, setTemperature] = useState(null);
   const [city, setCity] = useState(props.citName);
-  const [weather, setWeather] = useState({})
-
+  const [weather, setWeather] = useState({ready: false})
+  
   function weatherData(response){
+      
         setWeather({
+            ready: true,
             temperature: Math.round(response.data.main.temp),
             description: response.data.weather[0].description,
             wind: response.data.wind.speed,
@@ -25,7 +27,7 @@ export default function Weather(props) {
  
   function handleSubmit(event) {
     event.preventDefault();
-    let apiKey = "444dec86065a0dffc920fcea9a0aef12";
+    const apiKey = "444dec86065a0dffc920fcea9a0aef12";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}
     &appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(weatherData);
@@ -45,6 +47,7 @@ export default function Weather(props) {
     event.preventDefault();
     setTemperature(weather.temperature);
   }
+  if(weather.ready){
   return (
     <div className="Weather">
       <form onSubmit={handleSubmit}>
@@ -58,13 +61,12 @@ export default function Weather(props) {
         />
 
         <input type="submit" value="🔍" className="btn btn-light shadow-sm" />
-        <button className="btn btn-info shadow-sm"> Current Location </button>
       </form>
 
       <h1>{city}</h1>
 
       <ul>
-        <li className="description">{weather.description}</li>
+        <li className="description" >{weather.description}</li>
 
         <li>
           {" "}
@@ -104,5 +106,21 @@ export default function Weather(props) {
         <li className="current-time">{displayData.date}</li>
       </ul>
     </div>
-  );
+  );} else{
+     return( <div className="Weather">
+           <form onSubmit={handleSubmit}>
+        <input
+          type="search"
+          placeholder="City search"
+          onChange={updateCity}
+          autoFocus="on"
+          autoComplete="off"
+          className="form-control form-control-sm shadow-sm"
+        />
+
+        <input type="submit" value="🔍" className="btn btn-light shadow-sm" />
+      </form>
+      </div>)
+  }
+
 }
