@@ -33,6 +33,10 @@ li {
   font-weight: 100;
 }
 
+hr {
+  width: 60%;
+}
+
 .description {
   font-size: 22px;
 }
@@ -86,30 +90,4 @@ canvas .WeatherIcon {
 
 .fa-wind {
   color: #c7cfb7;
-}
-
-.weather-forecast {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 13px;
-  color: #222831;
-  font-weight: 400;
-}
-
-.weather-forecast h3 {
-  font-size: 14px;
-  line-height: 15px;
-  padding-top: 7px;
-  margin: 0;
-}
-
-.weather-forecast img {
-  display: block;
-  margin: 0 auto;
-  height: 48px;
-  width: 48px;
-}
-
-.weather-forecast-temperature {
-  line-height: 15px;
 }

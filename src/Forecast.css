@@ -1,0 +1,19 @@
+.Forecast {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #222831;
+  font-weight: 400;
+}
+.Forecast h4 {
+  font-size: 14px;
+  line-height: 15px;
+  padding-top: 7px;
+  margin: 0;
+}
+
+.Forecast canvas {
+  display: block;
+  height: 55px;
+  width: 55px;
+}
