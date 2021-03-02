@@ -4,8 +4,7 @@
   padding: 15px;
   max-width: 600px;
   margin: 0px auto;
-  /*background: linear-gradient(to top, #005aa7, #fffde4);*/
-  background: linear-gradient(to bottom, #56ccf2, #2f80ed);
+  background: linear-gradient(to top, #1fa2ff, #12d8fa, #a6ffcb);
 }
 
 body {
