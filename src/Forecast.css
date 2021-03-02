@@ -16,4 +16,8 @@
   display: block;
   height: 55px;
   width: 55px;
+  padding: 3px;
+  margin: 8px 0;
+}
+.Forecast .wind {
 }

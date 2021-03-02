@@ -23,6 +23,6 @@ export default function ForecastPreview(props){
             <br />
             <i className="fas fa-water"></i> {props.data.main.humidity}%
             <br />
-            <i className="fas fa-wind"></i> {props.data.wind.speed}km/h
+           <i className="fas fa-wind"></i> {Math.round(props.data.wind.speed*3.6)}km/h
             </div>
 }

@@ -32,7 +32,7 @@ export default function WeatherInfo(props){
 
         <li>
           <i className="fas fa-wind"></i>{" "}
-          <span className="wind-speed"> {props.info.wind}km/h</span>{" "}
+          <span className="wind-speed"> {(props.info.wind*3.6).toFixed(1)}km/h</span>{" "}
         </li>
 
         <li className="current-time"><FormattedDate day={props.info.date} /></li>
